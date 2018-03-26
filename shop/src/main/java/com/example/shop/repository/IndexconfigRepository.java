@@ -15,7 +15,7 @@ import com.example.shop.entity.Indexconfig;
 
 
 @RepositoryRestResource(path = "config")
-public interface IndexconfigRepository extends JpaRepository<Indexconfig, Integer> {
+public interface IndexconfigRepository extends JpaRepository<Indexconfig, Long> {
 //	Indexconfig findByInteger(Integer id);
 	
 	//@Query("select i from Indexconfig i where i.id=(select max(p2.id) from Indexconfig p2)")

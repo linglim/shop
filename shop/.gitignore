@@ -44,3 +44,7 @@ gen/
 .classpath  
 .project  
 .DS_Store  
+*.log
+mvnw
+*.cmd
+/.mvn/

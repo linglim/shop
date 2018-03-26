@@ -61,25 +61,30 @@ public class IndexServiceImpl implements IndexService {
 		Indexconfig IC = getConfig();
 		
 		//Integer index_id = IC.getId();
-		Integer index_id = 1;
-		//获取根目录的gridview  ,通过是实体类去查找 
-		List<GridView> gridList = gridRepo.findByIndexconfigAndParentId(IC, -1);
+		long index_id = -1;
+		//获取根目录的gridview  ,通过配置文件和parentid去查找 
+		List<GridView> gridList = gridRepo.findByIndexconfigAndParentId(IC, index_id);
 		
 		System.out.println("11111111111111");
+		
+		//构造grid_view单元
 		int count_g = gridList.size();
 		for(GridView gv:gridList){
 			JSONObject row = new JSONObject();
 			row.put("style_id", gv.getStyleId());
 			row.put("ratio", gv.getRatio());
+			//构造grid_view单元的data
 			row.put("data", getGridViewList(gv.getIndexconfig()));
 			result.add(row);
 		}
+		//构造Carousel_View单元，通过indexconfig查找
 		List<CarouselView> cList = carRepo.findByIndexconfig(IC);
 		int count_c = cList.size();
 		for(CarouselView cv: cList){
 			JSONObject row = new JSONObject();
 			row.put("style_id", cv.getStyleId());
 			row.put("ratio", cv.getRatio());
+			//构造grid_view单元的data
 			row.put("data", getCarouselViewList(cv.getIndexconfig()));
 			result.add(row);
 		}
@@ -87,7 +92,7 @@ public class IndexServiceImpl implements IndexService {
 		
 	}
 	
-	//获取最新的配置文件
+	//获取最新的配置文件，每次默认取第一个
 	public Indexconfig getConfig(){
 		
 //		//indexconfig = indexRepo.findTopByOrderByIdAsc();
@@ -95,7 +100,7 @@ public class IndexServiceImpl implements IndexService {
 //			
 //		indexconfig = indexRepo.findByRato(a);
 //		return indexconfig;
-		return this.indexRepo.getOne(1);
+		return this.indexRepo.getOne((long) 1);
 	}
 	
 
@@ -177,7 +182,8 @@ public class IndexServiceImpl implements IndexService {
 	
 	
 	
-	//递归获得
+	//递归获得GridView列表的data,通过config查询
+	
 	
 	@Transactional(readOnly = true)
 	public JSONArray getGridViewList(Indexconfig ic) {
@@ -193,8 +199,8 @@ public class IndexServiceImpl implements IndexService {
 	}
 	
 	
-	public JSONArray recursive(Indexconfig ic,Integer parent_id){
-		List<GridView> gridlist = gridRepo.findByIndexconfigAndParentId(ic, parent_id);
+	public JSONArray recursive(Indexconfig ic,long l){
+		List<GridView> gridlist = gridRepo.findByIndexconfigAndParentId(ic, l);
 
     	
     	if(gridlist == null||gridlist.isEmpty()){

@@ -14,7 +14,7 @@ import net.minidev.json.JSONArray;
 
 //@RepositoryRestResource(collectionResourceRel = "data",path = "ship_address")
 @RepositoryRestResource(path = "user/shipaddress")
-public interface ShipAddressRepository  extends JpaRepository<ShipAddress, Integer> {
+public interface ShipAddressRepository  extends JpaRepository<ShipAddress, Long> {
 	/**
 	 * 查找配送
 	 * 
@@ -23,7 +23,7 @@ public interface ShipAddressRepository  extends JpaRepository<ShipAddress, Integ
    
     List<ShipAddress> findByUserId(Integer access_token);
 
-	ShipAddress findByUserIdAndIsDefault(Integer user_id, Integer is_default);
+	ShipAddress findByUserIdAndIsDefault(long user_id, Integer is_default);
 	
 
 }

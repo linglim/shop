@@ -2,6 +2,12 @@ package com.example.shop.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 
 
@@ -28,20 +34,30 @@ public class Comment extends Base implements Serializable {
 //	private Date createdAt;
 
 	@Column(name="is_show")
-	private byte isShow;
-
+	@JsonIgnore
+	private int isShow;
+	
+	@JsonProperty(value="rating")
 	private int rate;
 
 	/*@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="updated_at")
 	private Date updatedAt;
 */
-	@Column(name="user_id")
-	private int userId;
+	//@Column(name="user_id")
+	//private int userId;	
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	@JsonProperty(value="buyer")
+	private User user;
 
 	//bi-directional many-to-one association to Product
 	@ManyToOne
+	
+
+	@JsonBackReference
 	@JoinColumn(name="product_id")
+	
 	private Product product;
 
 	public Comment() {
@@ -71,11 +87,11 @@ public class Comment extends Base implements Serializable {
 //		this.createdAt = createdAt;
 //	}
 
-	public byte getIsShow() {
+	public int getIsShow() {
 		return this.isShow;
 	}
 
-	public void setIsShow(byte isShow) {
+	public void setIsShow(int isShow) {
 		this.isShow = isShow;
 	}
 
@@ -94,15 +110,25 @@ public class Comment extends Base implements Serializable {
 //	public void setUpdatedAt(Date updatedAt) {
 //		this.updatedAt = updatedAt;
 //	}
-
-	public int getUserId() {
-		return this.userId;
+	
+//	public int getUserId() {
+//		return this.userId;
+//	}
+//
+//	public void setUserId(int userId) {
+//		this.userId = userId;
+//	}
+	
+	
+	public User getUser() {
+	return this.user;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUserId(User user) {
+	this.user = user;
 	}
-
+	
+	@JsonIgnore
 	public Product getProduct() {
 		return this.product;
 	}
