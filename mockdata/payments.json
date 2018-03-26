@@ -1,0 +1,29 @@
+{
+    "code":1,
+    "data":[
+        {
+            "name":"支付宝支付",
+            "icon":"http://wfshop.andysheng.cn/img/payment_icon/alipay.png",
+            "sub_title":"支付宝安全支付",
+            "channel":"alipay"
+        },
+        {
+            "name":"微信支付",
+            "icon":"https://wfshop.andysheng.cn/img/payment_icon/wx.png",
+            "sub_title":"微信安全支付",
+            "channel":"wx"
+        },
+        {
+            "name":"银联支付",
+            "icon":"http://wfshop.andysheng.cn/img/payment_icon/unionpay.png",
+            "sub_title":"中国银联在线支付服务",
+            "channel":"upacp"
+        },
+        {
+            "name":"百度钱包",
+            "icon":"http://wfshop.andysheng.cn/img/payment_icon/baidu.png",
+            "sub_title":"百度钱包在线支付服务",
+            "channel":"bfb_wap"
+        }
+    ]
+}
