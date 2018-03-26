@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.example.shop.entity.JsonString;
 import com.example.shop.service.CatagoryService;
 
 import net.minidev.json.JSONObject;
@@ -24,14 +24,12 @@ public class CatagoryController {
 	//获得分类列表，responsebody将返回不代表路径，而是返回json数据放在body里
 	 @RequestMapping("/catagory")
 	 @ResponseBody
-	    public JSONObject index() {
-		    JSONObject json = new JSONObject();
-		    
-		    json.put("code",1);
-		    json.put("data", catservice.getCategoryList());
-		    
+	    public JsonString index() {
+
+		    JsonString js = new JsonString(1,"成功",catservice.getCategoryList()); 
+	        return js;
 		   // categoryService.getProductCategoryList();
-	        return json;
+	        
 	    }
 	 
 	 

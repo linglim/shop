@@ -37,7 +37,7 @@ public class GridView extends Base implements Serializable {
 	}
 
 	@Column(name="parent_id")
-	private int parentId;
+	private long parentId;
 
 	@Column(name="style_id", length=255)
 	private String styleId;
@@ -84,11 +84,11 @@ public class GridView extends Base implements Serializable {
 		this.orientation = orientation;
 	}
 
-	public int getParentId() {
+	public long getParentId() {
 		return this.parentId;
 	}
 
-	public void setParentId(int parentId) {
+	public void setParentId(long parentId) {
 		this.parentId = parentId;
 	}
 

@@ -2,6 +2,9 @@ package com.example.shop.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 import java.util.List;
 
@@ -24,24 +27,38 @@ public class User extends Base implements Serializable {
 //	@Temporal(TemporalType.TIMESTAMP)
 //	@Column(name="created_at")
 //	private Date createdAt;
-
+	@JsonIgnore
 	@Column(length=255)
 	private String email;
-
+	
 	@Column(length=255)
 	private String name;
-
+	@JsonIgnore
 	@Column(length=11)
 	private String phone;
 	
-
+	@JsonIgnore
 	@Column(length=11)
 	private String password;
 	
 //	@Temporal(TemporalType.TIMESTAMP)
 //	@Column(name="updated_at")
 //	private Date updatedAt;
+	
+	@ManyToOne
+	@JsonIgnore
+	@JoinColumn(name="role_id")
+	private Role role;
+	
+	public Role getRole() {
+		return this.role;
+	}
 
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	
 	public String getPassword() {
 		return password;
 	}
@@ -52,6 +69,7 @@ public class User extends Base implements Serializable {
 
 	//bi-directional many-to-one association to Authorization
 	@OneToMany(mappedBy="user")
+	@JsonIgnore
 	private List<Authorization> authorizations;
 
 	public User() {
@@ -113,18 +131,18 @@ public class User extends Base implements Serializable {
 		this.authorizations = authorizations;
 	}
 
-	public Authorization addAuthorization(Authorization authorization) {
-		getAuthorizations().add(authorization);
-		authorization.setUser(this);
-
-		return authorization;
-	}
-
-	public Authorization removeAuthorization(Authorization authorization) {
-		getAuthorizations().remove(authorization);
-		authorization.setUser(null);
-
-		return authorization;
-	}
+//	public Authorization addAuthorization(Authorization authorization) {
+//		getAuthorizations().add(authorization);
+//		authorization.setUser(this);
+//
+//		return authorization;
+//	}
+//
+//	public Authorization removeAuthorization(Authorization authorization) {
+//		getAuthorizations().remove(authorization);
+//		authorization.setUser(null);
+//
+//		return authorization;
+//	}
 
 }

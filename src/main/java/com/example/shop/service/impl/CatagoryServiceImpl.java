@@ -28,14 +28,14 @@ public class CatagoryServiceImpl implements CatagoryService {
   @Transactional(readOnly = true)
 	public JSONArray getCategoryList() {
 		// TODO Auto-generated method stub
-    	JSONArray cataList = recursive(-1);
+    	JSONArray cataList = recursive((long) -1);
 		for(Object obj : cataList){		
 		   System.out.println(obj.toString());
 		}
 		return cataList;
 	}
 //    
-    public JSONArray recursive(Integer parent_id){
+    public JSONArray recursive(Long parent_id){
     	List<Category> cataList = cataRepo.findByParentId(parent_id);
     	
     	if(cataList == null||cataList.isEmpty()){
@@ -57,11 +57,15 @@ public class CatagoryServiceImpl implements CatagoryService {
     	}
     	return result;
     }
-	@Override
-	public Category findCategoryById(int id) {
+	public Category findCategoryById(Long id) {
 		// TODO Auto-generated method stub
 		return cataRepo.findOne(id);
 		//return null;
+	}
+	@Override
+	public Category findCategoryById(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

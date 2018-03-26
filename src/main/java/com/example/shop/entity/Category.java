@@ -2,6 +2,9 @@ package com.example.shop.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.Date;
 import java.util.List;
 
@@ -32,7 +35,7 @@ public class Category extends Base implements Serializable {
 	private String name;
 
 	@Column(name="parent_id")
-	private int parentId;
+	private long parentId;
 
 //	@Temporal(TemporalType.TIMESTAMP)
 //	@Column(name="updated_at")
@@ -40,6 +43,7 @@ public class Category extends Base implements Serializable {
 
 	//bi-directional many-to-one association to Product
 	@OneToMany(mappedBy="category")
+	@JsonBackReference
 	private List<Product> products;
 
 	//bi-directional many-to-one association to ProductGroup
@@ -81,11 +85,11 @@ public class Category extends Base implements Serializable {
 		this.name = name;
 	}
 
-	public int getParentId() {
+	public long getParentId() {
 		return this.parentId;
 	}
 
-	public void setParentId(int parentId) {
+	public void setParentId(long parentId) {
 		this.parentId = parentId;
 	}
 

@@ -2,6 +2,10 @@ package com.example.shop.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 
 
@@ -25,6 +29,7 @@ public class ProductSpecification extends Base implements Serializable {
 //	private Date createdAt;
 
 	@Column(length=255)
+	@JsonBackReference
 	private String name;
 
 //	@Temporal(TemporalType.TIMESTAMP)
@@ -34,12 +39,17 @@ public class ProductSpecification extends Base implements Serializable {
 	//bi-directional many-to-one association to Product
 	@ManyToOne
 	@JoinColumn(name="product_id")
+	@JsonBackReference
+	@JsonIgnore
 	private Product product;
 
 	//bi-directional many-to-one association to Group_specification
 	@ManyToOne
+
 	@JoinColumn(name="specification_id")
+	
 	private Group_specification groupSpecification;
+	
 
 	//bi-directional many-to-one association to GroupSpecificationOption
 	@ManyToOne

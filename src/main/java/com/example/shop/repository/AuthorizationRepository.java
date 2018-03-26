@@ -10,10 +10,10 @@ import com.example.shop.entity.Authorization;
 import com.example.shop.entity.ShipAddress;
 
 @RepositoryRestResource
-public interface AuthorizationRepository extends JpaRepository<Authorization, Integer> {
-    List<Authorization> findByAccessToken(String access_token);
+public interface AuthorizationRepository extends JpaRepository<Authorization, Long> {
+   // List<Authorization> findByAccessToken(String access_token);
 
-    Authorization getByAccessToken(String access_token);
+    Authorization getOne(Long id);
 
 	
 

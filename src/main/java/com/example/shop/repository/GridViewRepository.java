@@ -9,10 +9,10 @@ import com.example.shop.entity.Category;
 import com.example.shop.entity.GridView;
 import com.example.shop.entity.Indexconfig;
 @RepositoryRestResource
-public interface GridViewRepository extends JpaRepository<GridView, Integer> {
+public interface GridViewRepository extends JpaRepository<GridView, Long> {
 	List<GridView>  findByIndexconfig(Indexconfig indexconfig);
-	List<GridView>  findByIndexconfig(Integer index_id);
-	List<GridView> findByParentId(Integer parent_id);
+	List<GridView>  findByIndexconfig(Long index_id);
+	List<GridView> findByParentId(Long parent_id);
 	
-	List<GridView> findByIndexconfigAndParentId(Indexconfig index,Integer parent_id);
+	List<GridView> findByIndexconfigAndParentId(Indexconfig index,long l);
 }

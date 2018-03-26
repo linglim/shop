@@ -2,6 +2,10 @@ package com.example.shop.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +19,7 @@ import java.util.List;
 @NamedQuery(name="GroupSpecificationOption.findAll", query="SELECT g FROM GroupSpecificationOption g")
 public class GroupSpecificationOption extends Base implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 //	@Id
 //	@GeneratedValue(strategy=GenerationType.AUTO)
 //	@Column(unique=true, nullable=false)
@@ -30,15 +34,18 @@ public class GroupSpecificationOption extends Base implements Serializable {
 //	private Date updatedAt;
 
 	@Column(length=255)
+	@JsonProperty("option_name")
 	private String value;
 
 	//bi-directional many-to-one association to Group_specification
 	@ManyToOne
 	@JoinColumn(name="spe_id")
+	@JsonBackReference
 	private Group_specification groupSpecification;
 
 	//bi-directional many-to-one association to ProductSpecification
 	@OneToMany(mappedBy="groupSpecificationOption")
+	@JsonBackReference
 	private List<ProductSpecification> productSpecifications;
 
 	public GroupSpecificationOption() {

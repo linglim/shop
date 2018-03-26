@@ -2,6 +2,12 @@ package com.example.shop.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +37,7 @@ public class Product extends Base implements Serializable {
 	private float price;
 
 	@Column(name="product_comission_id")
-	private Integer productComissionId;
+	private long productComissionId;
 
 	@Column(name="shop_category_id")
 	private int shopCategoryId;
@@ -40,6 +46,7 @@ public class Product extends Base implements Serializable {
 	private int shopId;
 
 	@Column(name="sub_title", length=255)
+	@JsonProperty("sub_title")
 	private String subTitle;
 
 //	@Temporal(TemporalType.TIMESTAMP)
@@ -48,28 +55,34 @@ public class Product extends Base implements Serializable {
 
 	//bi-directional many-to-one association to Comment
 	@OneToMany(mappedBy="product")
+	
 	private List<Comment> comments;
 
 	//bi-directional many-to-one association to MobileIntroImg
 	@OneToMany(mappedBy="product")
+	@JsonProperty("intro_imgs")
 	private List<MobileIntroImg> mobileIntroImgs;
 
 	//bi-directional many-to-one association to Category
 	@ManyToOne
 	@JoinColumn(name="category_id")
+	@JsonIgnore
 	private Category category;
 
 	//bi-directional many-to-one association to ProductGroup
 	@ManyToOne
 	@JoinColumn(name="product_group_id")
+	@JsonIgnore
 	private ProductGroup productGroup;
 
 	//bi-directional many-to-one association to ProductInfo
 	@OneToMany(mappedBy="product")
+	@JsonProperty("product_info")
 	private List<ProductInfo> productInfos;
 
 	//bi-directional many-to-one association to ProductSpecification
 	@OneToMany(mappedBy="product")
+	@JsonIgnore
 	private List<ProductSpecification> productSpecifications;
 
 	public Product() {
@@ -107,11 +120,11 @@ public class Product extends Base implements Serializable {
 		this.price = price;
 	}
 
-	public int getProductComissionId() {
+	public long getProductComissionId() {
 		return this.productComissionId;
 	}
 
-	public void setProductComissionId(int productComissionId) {
+	public void setProductComissionId(long productComissionId) {
 		this.productComissionId = productComissionId;
 	}
 

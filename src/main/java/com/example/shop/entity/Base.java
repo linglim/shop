@@ -4,6 +4,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 
 import javax.persistence.*;
@@ -13,24 +15,26 @@ import javax.persistence.*;
 public abstract class Base {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Integer id;
+    protected Long id;
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_at")
     @CreatedDate
+    @JsonIgnore 
     private Date createdDate;
     
 	
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="updated_at")
     @LastModifiedDate
+    @JsonIgnore 
     private Date modifyDate;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

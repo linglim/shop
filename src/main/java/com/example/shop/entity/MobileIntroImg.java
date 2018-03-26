@@ -2,6 +2,9 @@ package com.example.shop.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.Date;
 
 
@@ -35,6 +38,7 @@ public class MobileIntroImg extends Base implements Serializable {
 
 	//bi-directional many-to-one association to Product
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name="product_id")
 	private Product product;
 

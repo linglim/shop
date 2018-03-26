@@ -15,6 +15,6 @@ import com.example.shop.entity.Category;
  *
  */
 @RepositoryRestResource
-public interface CategoryRepository extends JpaRepository<Category, Integer> {
-	List<Category> findByParentId(Integer parent_id);
+public interface CategoryRepository extends JpaRepository<Category, Long> {
+	List<Category> findByParentId(Long parent_id);
 }

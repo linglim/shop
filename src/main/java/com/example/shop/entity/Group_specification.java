@@ -2,6 +2,9 @@ package com.example.shop.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.Date;
 import java.util.List;
 
@@ -35,14 +38,17 @@ public class Group_specification extends Base implements Serializable {
 	//bi-directional many-to-one association to ProductGroup
 	@ManyToOne
 	@JoinColumn(name="group_id")
+	@JsonBackReference
 	private ProductGroup productGroup;
 
 	//bi-directional many-to-one association to GroupSpecificationOption
 	@OneToMany(mappedBy="groupSpecification")
+	@JsonBackReference
 	private List<GroupSpecificationOption> groupSpecificationOptions;
 
 	//bi-directional many-to-one association to ProductSpecification
 	@OneToMany(mappedBy="groupSpecification")
+	@JsonBackReference
 	private List<ProductSpecification> productSpecifications;
 
 	public Group_specification() {
