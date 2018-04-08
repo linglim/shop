@@ -21,14 +21,30 @@ public abstract class Base {
     @Column(name="created_at")
     @CreatedDate
     @JsonIgnore 
-    private Date createdDate;
+    private Date createdAt;
     
 	
-    @Temporal(TemporalType.TIMESTAMP)
+    public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
     @Column(name="updated_at")
     @LastModifiedDate
     @JsonIgnore 
-    private Date modifyDate;
+    private Date updatedAt;
 
     public Long getId() {
         return id;
@@ -38,19 +54,7 @@ public abstract class Base {
         this.id = id;
     }
 
-    public Date getCreatedDate() {
-        return createdDate;
-    }
 
-    public void setCreateTime(Date createdDate) {
-        this.createdDate = createdDate;
-    }
 
-    public Date getUpdateTime() {
-        return modifyDate;
-    }
 
-    public void setUpdateTime(Date modifyDate) {
-        this.modifyDate = modifyDate;
-    }
 }

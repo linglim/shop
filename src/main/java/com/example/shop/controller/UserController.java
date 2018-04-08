@@ -8,11 +8,14 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.shop.entity.Authorization;
@@ -142,13 +145,15 @@ public class UserController {
      * /user/login
      * account:账号
        pwd:密码
+       
+       注销，在客户端本地删除token即可，服务端不需实现。
      * */
     
     @PostMapping("/login")
     public JsonString login(@RequestParam("username") String username,
                               @RequestParam("password") String password) {
         User user = userService.getUser(username);
-        System.out.println(user.getName());
+        System.out.println(user.getUsername());
         if (user.getPassword().equals(password)) {
             return new JsonString(200, "Login success", JWTUtil.sign(username, password));
         } else {
@@ -194,22 +199,29 @@ public class UserController {
      * /user/login
      * account:账号
        pwd:密码
+       
+     *@modelAttribute 参数在body --》x--form-ur
+     *@RestController 代替了 @Controller，表示该类里面的方法都是返回 JSON 数据
+     *@RequestBody
      * */
     
     @RequestMapping(value = "/register",method = RequestMethod.POST)
-    public JsonString Register(@PathVariable String name, @PathVariable String password) {
-        //userService.SendValite(user);
-    	User user = userRepo.findByName(name);
-    	if(user == null){
-    		return new JsonString(200, "Login fail",null);
-    	}
-    	if (user.getPassword().equals(password)) {
-            return new JsonString(200, "Login success", JWTUtil.sign(name, password));
-        } else {
-            throw new UnauthorizedException();
-        }  
-    }
     
+  //@JsonIgnoreProperties(ignoreUnknown = true)//忽略未知属性
+    public JsonString Register(@RequestBody User user) {
+        //userService.SendValite(user);    
+    	String username = user.getUsername();
+    	String password = user.getPassword();
+    	System.out.println("username"+username);
+    	System.out.println("password"+password);
+    	if(userRepo.findByUsername(user.getUsername())!= null){
+    		return new JsonString(201, "已存在该用户，请登录",null);
+    	}
+    	
+    	userRepo.save(user);
+    	return new JsonString(200, "注册成功",JWTUtil.sign(user.getUsername(), user.getPassword()));
+    }
+
     
     
     

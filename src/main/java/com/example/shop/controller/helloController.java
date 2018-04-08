@@ -23,7 +23,7 @@ public class helloController {
     @RequestMapping("/getUser")
     public User getUser() {
         User user=new User();
-        user.setName("小明");
+        user.setUsername("小明");
        // user.setPassWord("xxxx");
         return user;
     }

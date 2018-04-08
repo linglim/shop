@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50711
 File Encoding         : 65001
 
-Date: 2018-01-22 23:31:05
+Date: 2018-04-08 22:45:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -79,22 +79,19 @@ CREATE TABLE `ad_property` (
 DROP TABLE IF EXISTS `authorization`;
 CREATE TABLE `authorization` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `access_token` varchar(255) DEFAULT NULL,
-  `refresh_token` varchar(255) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `exipres_in` int(255) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_authorization_user_1` (`user_id`),
-  CONSTRAINT `FKb0ki8m7r22jwyto1m0xcxdjqo` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-  CONSTRAINT `fk_authorization_user_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+  CONSTRAINT `FKb0ki8m7r22jwyto1m0xcxdjqo` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of authorization
 -- ----------------------------
-INSERT INTO `authorization` VALUES ('1', '123456', '123456', '1', '12', '2018-01-08 17:38:57', '2018-01-08 17:39:01');
+INSERT INTO `authorization` VALUES ('1', '1', '2018-01-08 17:38:57', '2018-01-08 17:39:01', 'edit');
 
 -- ----------------------------
 -- Table structure for `carousel_item`
@@ -243,12 +240,13 @@ CREATE TABLE `comment` (
   `user_id` int(11) DEFAULT NULL,
   `rate` int(255) DEFAULT NULL,
   `comment` varchar(255) DEFAULT NULL,
-  `is_show` bit(63) DEFAULT NULL,
+  `is_show` int(11) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_table_1_product_1` (`product_id`),
   KEY `fk_table_1_user_1` (`user_id`),
+  CONSTRAINT `FK8kcum44fvpupyw6f5baccx25c` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `FKm1rmnfcvq5mk26li4lit88pc5` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
   CONSTRAINT `fk_table_1_product_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
   CONSTRAINT `fk_table_1_user_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
@@ -257,11 +255,11 @@ CREATE TABLE `comment` (
 -- ----------------------------
 -- Records of comment
 -- ----------------------------
-INSERT INTO `comment` VALUES ('1', '1', '1', null, '华而不实', null, null, null);
-INSERT INTO `comment` VALUES ('2', '1', '1', null, '为所欲为', null, null, null);
-INSERT INTO `comment` VALUES ('3', '2', '2', null, 'are you OK', null, null, null);
-INSERT INTO `comment` VALUES ('4', '3', '3', null, '魅族演唱会', null, null, null);
-INSERT INTO `comment` VALUES ('5', '4', '3', null, '阿里云OS', null, null, null);
+INSERT INTO `comment` VALUES ('1', '1', '1', '1', '华而不实', '1', '2018-03-13 21:36:40', '2018-03-13 21:36:53');
+INSERT INTO `comment` VALUES ('2', '1', '1', '2', '为所欲为', '1', '2018-03-13 21:36:43', '2018-03-13 21:36:56');
+INSERT INTO `comment` VALUES ('3', '2', '2', '3', 'are you OK', '1', '2018-03-13 21:36:45', '2018-03-13 21:36:58');
+INSERT INTO `comment` VALUES ('4', '3', '3', '4', '魅族演唱会', '1', '2018-03-13 21:36:47', '2018-03-13 21:37:01');
+INSERT INTO `comment` VALUES ('5', '4', '3', '5', '阿里云OS', '1', '2018-03-13 22:36:50', '2018-03-13 21:37:04');
 
 -- ----------------------------
 -- Table structure for `commission_snapshot`
@@ -373,7 +371,7 @@ CREATE TABLE `grid_item` (
   KEY `FKmk95abn488qyyqqwixbd45rh3` (`grid_id`),
   CONSTRAINT `FKmk95abn488qyyqqwixbd45rh3` FOREIGN KEY (`grid_id`) REFERENCES `grid_view` (`id`),
   CONSTRAINT `fkb_grid_id` FOREIGN KEY (`grid_id`) REFERENCES `grid_view` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of grid_item
@@ -387,6 +385,7 @@ INSERT INTO `grid_item` VALUES ('3', '6', 'https://ws3.sinaimg.cn/large/006tNc79
 INSERT INTO `grid_item` VALUES ('3', '7', 'https://ws3.sinaimg.cn/large/006tNc79ly1fkm829cjfhj305k05kdfz.jpg', 'wfshop://abc', '1', null, null);
 INSERT INTO `grid_item` VALUES ('3', '8', 'https://ws3.sinaimg.cn/large/006tNc79ly1fkm829cjfhj305k05kdfz.jpg', 'wfshop://abc', '1', null, null);
 INSERT INTO `grid_item` VALUES ('3', '9', 'https://ws3.sinaimg.cn/large/006tNc79ly1fkm829cjfhj305k05kdfz.jpg', 'wfshop://abc', '1', null, null);
+INSERT INTO `grid_item` VALUES ('1', '10', 'https://ws1.sinaimg.cn/large/006tNc79ly1fkm82o87h3j305k05kq32.jpg', 'wfshop://abc', '1', '2018-03-19 10:11:11', '2018-03-19 10:11:15');
 
 -- ----------------------------
 -- Table structure for `grid_view`
@@ -786,10 +785,10 @@ CREATE TABLE `product` (
 -- ----------------------------
 -- Records of product
 -- ----------------------------
-INSERT INTO `product` VALUES ('1', '1', '19', '1', '华为 HUAWEI Mate9 Pro （LON-AL00）6GB+128GB 琥珀金', '5299.00', null, '2018-01-09 12:54:55', '2018-01-09 12:55:06', '1', '    人像摄影大师”新一代徕卡双镜头 一体化前置指纹 5.1英寸显示屏 麒麟960芯片');
-INSERT INTO `product` VALUES ('2', '2', '18', '1', '小米 （MI）红米4A 2GB+16GB 全网通双卡双带手机', '599.00', null, '2018-01-09 12:54:58', '2018-01-09 12:55:08', '1', '人像摄影大师”新一代徕卡双镜头 一体化前置指纹 5.1英寸显示屏 麒麟960芯片');
-INSERT INTO `product` VALUES ('3', '1', '20', '1', '魅族（MiZu）魅族科比定制版 指纹识别全网通手机 4GB+64GB', '1280.00', null, '2018-01-09 12:55:00', '2018-01-09 12:55:12', '1', '人像摄影大师”新一代徕卡双镜头 一体化前置指纹 5.1英寸显示屏 麒麟960芯片');
-INSERT INTO `product` VALUES ('4', '1', '20', '1', '魅族（MiZu）魅族英雄联盟定制版 指纹识别全网通手机 4GB+64GB', '835.00', null, '2018-01-09 12:55:03', '2018-01-09 12:55:16', '1', '人像摄影大师”新一代徕卡双镜头 一体化前置指纹 5.1英寸显示屏 麒麟960芯片');
+INSERT INTO `product` VALUES ('1', '1', '19', '1', '华为 HUAWEI Mate9 Pro （LON-AL00）6GB+128GB 琥珀金', '5299.00', '1', '2018-01-09 12:54:55', '2018-01-09 12:55:06', '1', '    人像摄影大师”新一代徕卡双镜头 一体化前置指纹 5.1英寸显示屏 麒麟960芯片');
+INSERT INTO `product` VALUES ('2', '2', '18', '1', '小米 （MI）红米4A 2GB+16GB 全网通双卡双带手机', '599.00', '1', '2018-01-09 12:54:58', '2018-01-09 12:55:08', '1', '人像摄影大师”新一代徕卡双镜头 一体化前置指纹 5.1英寸显示屏 麒麟960芯片');
+INSERT INTO `product` VALUES ('3', '1', '20', '1', '魅族（MiZu）魅族科比定制版 指纹识别全网通手机 4GB+64GB', '1280.00', '1', '2018-01-09 12:55:00', '2018-01-09 12:55:12', '1', '人像摄影大师”新一代徕卡双镜头 一体化前置指纹 5.1英寸显示屏 麒麟960芯片');
+INSERT INTO `product` VALUES ('4', '1', '20', '1', '魅族（MiZu）魅族英雄联盟定制版 指纹识别全网通手机 4GB+64GB', '835.00', '1', '2018-01-09 12:55:03', '2018-01-09 12:55:16', '1', '人像摄影大师”新一代徕卡双镜头 一体化前置指纹 5.1英寸显示屏 麒麟960芯片');
 
 -- ----------------------------
 -- Table structure for `product_commision`
@@ -802,11 +801,12 @@ CREATE TABLE `product_commision` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of product_commision
 -- ----------------------------
+INSERT INTO `product_commision` VALUES ('1', '1', '1', '2018-03-13 21:28:11', '2018-03-13 21:28:15');
 
 -- ----------------------------
 -- Table structure for `product_commission_ratio`
@@ -970,6 +970,24 @@ CREATE TABLE `refund_payment` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for `role`
+-- ----------------------------
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of role
+-- ----------------------------
+INSERT INTO `role` VALUES ('1', '2018-03-23 16:08:31', '2018-03-23 16:08:33', 'admin');
+INSERT INTO `role` VALUES ('2', '2018-03-23 16:08:51', '2018-03-23 16:08:55', 'member');
+
+-- ----------------------------
 -- Table structure for `shiptype`
 -- ----------------------------
 DROP TABLE IF EXISTS `shiptype`;
@@ -1103,22 +1121,34 @@ INSERT INTO `shop_product` VALUES ('2', '2', '2', null, '2018-01-06 18:27:48', '
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `phone` varchar(11) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `avatar_url` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  `role` varchar(255) DEFAULT NULL,
+  `role_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKn82ha3ccdebhokx3a8fgdqeyy` (`role_id`),
+  CONSTRAINT `FKn82ha3ccdebhokx3a8fgdqeyy` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', '张三', null, '18800115530', '2018-01-08 17:38:12', '2018-01-08 17:38:21', '123456', null);
-INSERT INTO `user` VALUES ('2', '李四', null, '18800115531', '2018-01-08 17:38:15', '2018-01-08 17:38:24', null, null);
-INSERT INTO `user` VALUES ('3', '王五', null, '18800115531', '2018-01-08 17:38:18', '2018-01-08 17:38:27', null, null);
+INSERT INTO `user` VALUES ('1', '张三', null, '18800115530', '2018-01-08 17:38:12', '2018-01-08 17:38:21', '123456', 'https://wfshop.andysheng.cn/img/avatar_1.jpg', null, '2');
+INSERT INTO `user` VALUES ('2', '李四', null, '18800115531', '2018-01-08 17:38:15', '2018-01-08 17:38:24', null, 'https://wfshop.andysheng.cn/img/avatar_2.jpg', null, '2');
+INSERT INTO `user` VALUES ('3', '王五', null, '18800115531', '2018-01-08 17:38:18', '2018-01-08 17:38:27', null, 'https://wfshop.andysheng.cn/img/avatar_3.jpg', null, '2');
+INSERT INTO `user` VALUES ('4', 'admin', null, '18800115530', '2018-03-23 16:10:37', '2018-03-23 16:10:39', 'admin123', null, null, '1');
+INSERT INTO `user` VALUES ('5', 'zhangsan', null, '18800115530', '2018-04-06 13:55:05', '2018-04-06 13:55:08', '123456', null, null, '2');
+INSERT INTO `user` VALUES ('6', 'lisan', null, null, '2018-04-06 16:09:07', '2018-04-06 16:09:07', null, null, null, null);
+INSERT INTO `user` VALUES ('7', 'lisi', '359128244@qq.com', '18800115530', '2018-04-06 17:12:00', '2018-04-06 17:12:00', '123456', null, null, null);
+INSERT INTO `user` VALUES ('8', 'liwu', null, null, '2018-04-06 17:14:49', '2018-04-06 17:14:49', '123456', null, null, null);
+INSERT INTO `user` VALUES ('19', 'xiao', null, null, '2018-04-06 19:00:55', '2018-04-06 19:00:55', null, null, null, null);
+INSERT INTO `user` VALUES ('20', 'xia3333o', null, null, '2018-04-06 19:05:39', '2018-04-06 19:05:39', null, null, null, null);
+INSERT INTO `user` VALUES ('23', 'mml', '4355262', null, '2018-04-06 19:15:39', '2018-04-06 19:15:39', '13455', null, null, null);
 
 -- ----------------------------
 -- Table structure for `wechat_auth`

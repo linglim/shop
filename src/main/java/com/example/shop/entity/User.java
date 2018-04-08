@@ -27,17 +27,26 @@ public class User extends Base implements Serializable {
 //	@Temporal(TemporalType.TIMESTAMP)
 //	@Column(name="created_at")
 //	private Date createdAt;
-	@JsonIgnore
+//	@JsonIgnore
+
 	@Column(length=255)
 	private String email;
 	
 	@Column(length=255)
-	private String name;
-	@JsonIgnore
+	private String username;
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	//@JsonIgnore
 	@Column(length=11)
 	private String phone;
 	
-	@JsonIgnore
+	//@JsonIgnore
 	@Column(length=11)
 	private String password;
 	
@@ -46,7 +55,7 @@ public class User extends Base implements Serializable {
 //	private Date updatedAt;
 	
 	@ManyToOne
-	@JsonIgnore
+	//@JsonIgnore
 	@JoinColumn(name="role_id")
 	private Role role;
 	
@@ -99,13 +108,6 @@ public class User extends Base implements Serializable {
 		this.email = email;
 	}
 
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public String getPhone() {
 		return this.phone;

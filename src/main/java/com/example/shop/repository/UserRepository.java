@@ -12,6 +12,6 @@ public interface UserRepository
 	User findById(long id);
     Long deleteById(Integer id);
    // public Integer getUserId(String access_token);
-    User findByNameAndPassword(String name, String password);
-	User findByName(String name);
+    User findByUsernameAndPassword(String name, String password);
+	User findByUsername(String name);
 }
